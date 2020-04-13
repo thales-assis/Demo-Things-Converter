@@ -1,5 +1,7 @@
 package br.com.demo.things.converter.domain;
 
+import br.com.demo.things.converter.service.exception.ExpectedInvalidTypeException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -60,5 +62,18 @@ public enum Temperature implements TemperatureConverter {
             return value;
         }
     };
+
+    public Double converterToAnotherTemperature(Temperature anotherTemperature, Double value) {
+        switch (anotherTemperature) {
+            case CELSIUS:
+                return this.toCelsius(value);
+            case FAHRENHEIT:
+                return this.toFahrenheit(value);
+            case KELVIN:
+                return this.toKelvin(value);
+            default:
+                throw new ExpectedInvalidTypeException("The expected temperature type is invalid");
+        }
+    }
 
 }
